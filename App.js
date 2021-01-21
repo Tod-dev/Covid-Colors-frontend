@@ -1,15 +1,19 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, TextInput, View } from "react-native";
+import { StyleSheet, View } from "react-native";
+
+import regioni from "./data/regions.json";
+
+import Home from "./pages/Home";
 
 export default function App() {
+  const regions = regioni.map((r) => {
+    return { id: r.id, name: r.nome };
+  });
+  console.log(regions);
   return (
     <View style={styles.container}>
-      <TextInput
-        style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
-        onChangeText={(text) => onChangeText(text)}
-        value="lets fucking gooooo !"
-      />
+      <Home />
       <StatusBar style="auto" />
     </View>
   );
