@@ -12,7 +12,7 @@ export default Details;
 
 const style = StyleSheet.create({
   container: {
-    display: "flex",
+    flex: 1,
     alignItems: "center",
     justifyContent: "center",
   },

@@ -1,18 +1,28 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Button } from "react-native";
 
-const Home = () => {
+import regioni from "../data/regions.json";
+
+const Home = ({ navigation }) => {
+  const regions = regioni.map((r) => ({ id: r.id, name: r.nome }));
   return (
     <View style={style.container}>
-      <Text>Home Page</Text>
+      <Text style={style.text}>Home Page</Text>
+      <Button
+        title="Go to Details"
+        onPress={() => navigation.navigate("Details")}
+      />
     </View>
   );
 };
 export default Home;
 const style = StyleSheet.create({
   container: {
-    display: "flex",
+    flex: 1,
     alignItems: "center",
     justifyContent: "center",
+  },
+  text: {
+    marginBottom: 30,
   },
 });
