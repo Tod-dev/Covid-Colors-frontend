@@ -5,11 +5,11 @@ import Card from "../components/Card";
 import DataContext from "../components/DataContext";
 
 const Region = ({ name, id, color }) => {
-  const { setCurrentRegion } = useContext(DataContext);
+  const { currentRegion, setCurrentRegion } = useContext(DataContext);
 
   const onclickHandler = (title, id) => {
-    //console.log(title, id);
-    setCurrentRegion({ title, id });
+    if (currentRegion && currentRegion.id === id) setCurrentRegion(undefined);
+    else setCurrentRegion({ title, id });
   };
 
   return (

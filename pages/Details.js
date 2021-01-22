@@ -1,10 +1,12 @@
 import React from "react";
 import { Text, View, StyleSheet } from "react-native";
 
-const Details = () => {
+const Details = ({ route, navigation }) => {
+  const { idReg, titleReg, date, stringDate } = route.params;
   return (
     <View style={style.container}>
-      <Text>Details Page</Text>
+      <Text>Regione: {titleReg}</Text>
+      <Text>Data: {stringDate}</Text>
     </View>
   );
 };

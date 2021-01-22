@@ -8,16 +8,7 @@ import DateTimePicker from "../components/DateTimePicker";
 import DataContext from "../components/DataContext";
 import MyButton from "../components/MyButton";
 
-const convertDateToString = (date) => {
-  //console.log(date);
-  let today = date;
-  let dd = String(today.getDate()).padStart(2, "0");
-  let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-  let yyyy = today.getFullYear();
-
-  today = dd + "/" + mm + "/" + yyyy;
-  return today;
-};
+import { convertDateToString } from "../utils";
 
 const Home = ({ navigation }) => {
   const [currentRegion, setCurrentRegion] = useState(undefined);
@@ -26,6 +17,9 @@ const Home = ({ navigation }) => {
     () => ({ currentRegion, setCurrentRegion, currentDate, setCurrentDate }),
     [currentRegion, setCurrentRegion, currentDate, setCurrentDate]
   );
+  useEffect(() => {
+    setCurrentRegion(undefined);
+  }, [navigation]);
   const regions = regioni.map((r) => ({ id: r.id, name: r.nome }));
   const regioniStyled = regions.map((item) => (
     <Region
@@ -67,42 +61,47 @@ const Home = ({ navigation }) => {
   }, [currentRegion]);
 
   const goToDetails = () => {
-    navigation.navigate("Details"); // passa le props
+    const stringdate = convertDateToString(currentDate);
+    navigation.navigate("Details", {
+      idReg: currentRegion.id,
+      titleReg: currentRegion.title,
+      date: currentDate.getDate(),
+      stringDate: stringdate,
+    }); // passa le props
   };
 
   return (
     <DataContext.Provider value={value}>
       <SafeAreaView style={style.container}>
+        <Text style={style.intestazioni}>1 - Seleziona una Regione</Text>
         {!currentRegion ? (
-          <>
-            <Text style={style.text}>1 - Seleziona una Regione</Text>
-            <View style={style.mylist}>{reg}</View>
-          </>
+          <View style={style.mylist}>{reg}</View>
         ) : (
-          <>
-            <View style={{ ...style.mylist, marginBottom: 50 }}>{reg}</View>
-            <Text style={style.text}>2 - Seleziona una Data</Text>
-            <DateTimePicker />
-            {convertDateToString(currentDate) ==
-            convertDateToString(new Date()) ? (
-              <MyButton
-                text1="SCOPRI LE LIMITAZIONI DI "
-                text2="OGGI"
-                text3=" NELLA REGIONE "
-                text4={currentRegion.title}
-                onPress={goToDetails}
-              />
-            ) : (
-              <MyButton
-                text1="SCOPRI LE LIMITAZIONI DEL "
-                text2={convertDateToString(currentDate)}
-                text3=" NELLA REGIONE "
-                text4={currentRegion.title}
-                onPress={goToDetails}
-              />
-            )}
-          </>
+          <View style={{ ...style.mylist, marginBottom: 50 }}>{reg}</View>
         )}
+        <>
+          <Text style={style.intestazioni}>2 - Seleziona una Data</Text>
+          <DateTimePicker />
+          {convertDateToString(currentDate) == convertDateToString(new Date())
+            ? currentRegion && (
+                <MyButton
+                  text1="SCOPRI LE LIMITAZIONI DI "
+                  text2="OGGI"
+                  text3=" NELLA REGIONE "
+                  text4={currentRegion.title}
+                  onPress={goToDetails}
+                />
+              )
+            : currentRegion && (
+                <MyButton
+                  text1="SCOPRI LE LIMITAZIONI DEL "
+                  text2={convertDateToString(currentDate)}
+                  text3=" NELLA REGIONE "
+                  text4={currentRegion.title}
+                  onPress={goToDetails}
+                />
+              )}
+        </>
       </SafeAreaView>
     </DataContext.Provider>
   );
@@ -112,13 +111,14 @@ const style = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
+    marginHorizontal: 17,
   },
-  text: {
+  intestazioni: {
     color: Colors.primary,
     fontSize: 20,
-    margin: 20,
     fontWeight: "bold",
+    marginVertical: 20,
   },
   mylist: {
     margin: 5,
