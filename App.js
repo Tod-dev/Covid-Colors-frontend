@@ -8,19 +8,14 @@ import Details from "./pages/Details";
 
 const Stack = createStackNavigator();
 
-const DataContext = React.createContext();
-
 export default function App() {
-  const initialContextValue = { region: null, date: "" };
   return (
-    <DataContext.Provider value={initialContextValue}>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home">
-          <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen name="Details" component={Details} />
-        </Stack.Navigator>
-        <StatusBar style="auto" />
-      </NavigationContainer>
-    </DataContext.Provider>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Details" component={Details} />
+      </Stack.Navigator>
+      <StatusBar style="auto" />
+    </NavigationContainer>
   );
 }

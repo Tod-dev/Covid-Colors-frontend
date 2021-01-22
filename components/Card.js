@@ -1,12 +1,26 @@
 import React from "react";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 
-import Colors from "../styles/Colors";
+const Card = ({ title, id, style, onClick, color }) => {
+  const cardStyle = StyleSheet.create({
+    card: {
+      padding: 17,
+      backgroundColor: color,
+      flex: 1,
+      borderRadius: 10,
+      margin: 5,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    text: {
+      fontWeight: "bold",
+      fontSize: 15,
+    },
+  });
 
-const Card = ({ title, id, style, onClick }) => {
   return (
     <TouchableOpacity onPress={() => onClick(title, id)}>
-      <View style={{ ...style.view, ...cardStyle.card }} onc>
+      <View style={{ ...style.view, ...cardStyle.card }}>
         <Text style={{ ...style.text, ...cardStyle.text }}>{title}</Text>
       </View>
     </TouchableOpacity>
@@ -14,19 +28,3 @@ const Card = ({ title, id, style, onClick }) => {
 };
 
 export default Card;
-
-const cardStyle = StyleSheet.create({
-  card: {
-    padding: 10,
-    backgroundColor: Colors.primary,
-    flex: 1,
-    borderRadius: 10,
-    margin: 5,
-    maxWidth: 223,
-    maxHeight: 150,
-  },
-  text: {
-    fontWeight: "bold",
-    fontSize: 15,
-  },
-});

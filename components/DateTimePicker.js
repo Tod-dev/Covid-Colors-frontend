@@ -1,26 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { View, Button, Platform } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
+import DataContext from "../components/DataContext";
+
 const DatePicker = () => {
-  const [date, setDate] = useState(new Date());
+  const { currentDate, setCurrentDate } = useContext(DataContext);
   const [show, setShow] = useState(false);
 
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
+  const onChange = (e, selectedDate) => {
+    const newdate = selectedDate || currentDate;
     setShow(Platform.OS === "ios");
-    setDate(currentDate);
+    setCurrentDate(newdate);
   };
 
   return (
-    <View>
+    <View style={{ marginBottom: 20 }}>
       <View>
-        <Button onPress={() => setShow(true)} title="Show date picker!" />
+        <Button onPress={() => setShow(true)} title="Scegli un'altra data" />
       </View>
       {show && (
         <DateTimePicker
           testID="dateTimePicker"
-          value={date}
+          value={currentDate}
           mode="date"
           is24Hour={true}
           display="default"

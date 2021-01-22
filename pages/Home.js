@@ -1,15 +1,15 @@
-import React, { useState, useContext } from "react";
-import { SafeAreaView, Text, StyleSheet, Button, FlatList } from "react-native";
+import React, { useState, useMemo, useEffect } from "react";
+import { SafeAreaView, Text, StyleSheet, Button, View } from "react-native";
 
 import regioni from "../data/regions.json";
 import Region from "../components/Region";
 import Colors from "../styles/Colors";
 import DateTimePicker from "../components/DateTimePicker";
-
-//navigation.navigate("Details");
+import DataContext from "../components/DataContext";
+import MyButton from "../components/MyButton";
 
 const convertDateToString = (date) => {
-  console.log(date);
+  //console.log(date);
   let today = date;
   let dd = String(today.getDate()).padStart(2, "0");
   let mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
@@ -21,34 +21,90 @@ const convertDateToString = (date) => {
 
 const Home = ({ navigation }) => {
   const [currentRegion, setCurrentRegion] = useState(undefined);
-  const onclickHandler = (title, id) => {
-    //console.log(title, id);
-    setCurrentRegion({ title, id });
-  };
-  const RenderItem = ({ item }) => (
-    <Region name={item.name} id={item.id} onClickHandler={onclickHandler} />
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const value = useMemo(
+    () => ({ currentRegion, setCurrentRegion, currentDate, setCurrentDate }),
+    [currentRegion, setCurrentRegion, currentDate, setCurrentDate]
   );
   const regions = regioni.map((r) => ({ id: r.id, name: r.nome }));
+  const regioniStyled = regions.map((item) => (
+    <Region
+      name={item.name}
+      id={item.id}
+      key={item.id}
+      color={Colors.primary}
+    />
+  ));
+  const [reg, setReg] = useState(regioniStyled); //array di regioni
+
+  useEffect(() => {
+    if (currentRegion) {
+      const newRegionsArray = regions.map((item) => {
+        if (item.id === currentRegion.id) {
+          return (
+            <Region
+              name={item.name}
+              id={item.id}
+              key={item.id}
+              color={Colors.primary}
+            />
+          );
+        } else {
+          return (
+            <Region
+              name={item.name}
+              id={item.id}
+              key={item.id}
+              color={Colors.secondary}
+            />
+          );
+        }
+      });
+      setReg(newRegionsArray);
+    } else {
+      setReg(regioniStyled);
+    }
+  }, [currentRegion]);
+
+  const goToDetails = () => {
+    navigation.navigate("Details"); // passa le props
+  };
+
   return (
-    <SafeAreaView style={style.container}>
-      {!currentRegion ? (
-        <>
-          <Text style={style.text}>1 - Seleziona una Regione</Text>
-          <FlatList
-            contentContainerStyle={style.mylist}
-            data={regions}
-            renderItem={RenderItem}
-            keyExtractor={(item) => item.id}
-          />
-        </>
-      ) : (
-        <>
-          <Text style={style.text}>2 - Seleziona una Data</Text>
-          <Text>Regione: {currentRegion.title}</Text>
-          <DateTimePicker />
-        </>
-      )}
-    </SafeAreaView>
+    <DataContext.Provider value={value}>
+      <SafeAreaView style={style.container}>
+        {!currentRegion ? (
+          <>
+            <Text style={style.text}>1 - Seleziona una Regione</Text>
+            <View style={style.mylist}>{reg}</View>
+          </>
+        ) : (
+          <>
+            <View style={{ ...style.mylist, marginBottom: 50 }}>{reg}</View>
+            <Text style={style.text}>2 - Seleziona una Data</Text>
+            <DateTimePicker />
+            {convertDateToString(currentDate) ==
+            convertDateToString(new Date()) ? (
+              <MyButton
+                text1="SCOPRI LE LIMITAZIONI DI "
+                text2="OGGI"
+                text3=" NELLA REGIONE "
+                text4={currentRegion.title}
+                onPress={goToDetails}
+              />
+            ) : (
+              <MyButton
+                text1="SCOPRI LE LIMITAZIONI DEL "
+                text2={convertDateToString(currentDate)}
+                text3=" NELLA REGIONE "
+                text4={currentRegion.title}
+                onPress={goToDetails}
+              />
+            )}
+          </>
+        )}
+      </SafeAreaView>
+    </DataContext.Provider>
   );
 };
 export default Home;
