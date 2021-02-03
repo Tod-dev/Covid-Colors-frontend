@@ -33,7 +33,7 @@ export default function App() {
           name="Details"
           component={Details}
           options={({ route }) => ({
-            title: `${route.params.titleReg}  ${route.params.stringDate}`,
+            title: `${route.params.name}`,
             headerStyle: {
               backgroundColor: "#f4511e",
             },

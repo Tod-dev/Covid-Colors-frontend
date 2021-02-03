@@ -4,21 +4,21 @@ import { StyleSheet } from "react-native";
 import Card from "../components/Card";
 import DataContext from "../components/DataContext";
 
-const Region = ({ name, id, color }) => {
+const Region = (props) => {
   const { currentRegion, setCurrentRegion } = useContext(DataContext);
 
-  const onclickHandler = (title, id) => {
-    if (currentRegion && currentRegion.id === id) setCurrentRegion(undefined);
-    else setCurrentRegion({ title, id });
+  const onclickHandler = (id) => {
+    //console.log(title, id);
+    if (currentRegion && currentRegion === id) setCurrentRegion(undefined);
+    else setCurrentRegion(id);
   };
 
   return (
     <Card
-      title={name}
-      id={id}
+      reg={props.reg}
       style={style}
       onClick={onclickHandler}
-      color={color}
+      color={props.color}
     />
   );
 };

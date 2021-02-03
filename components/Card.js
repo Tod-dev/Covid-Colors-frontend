@@ -1,11 +1,12 @@
 import React from "react";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 
-const Card = ({ title, id, style, onClick, color }) => {
+const Card = (props) => {
+  //console.log(props);
   const cardStyle = StyleSheet.create({
     card: {
       padding: 17,
-      backgroundColor: color,
+      backgroundColor: props.color,
       flex: 1,
       borderRadius: 10,
       margin: 5,
@@ -19,9 +20,11 @@ const Card = ({ title, id, style, onClick, color }) => {
   });
 
   return (
-    <TouchableOpacity onPress={() => onClick(title, id)}>
-      <View style={{ ...style.view, ...cardStyle.card }}>
-        <Text style={{ ...style.text, ...cardStyle.text }}>{title}</Text>
+    <TouchableOpacity onPress={() => props.onClick(props.reg._id)}>
+      <View style={{ ...props.style.view, ...cardStyle.card }}>
+        <Text style={{ ...props.style.text, ...cardStyle.text }}>
+          {props.reg.name}
+        </Text>
       </View>
     </TouchableOpacity>
   );
