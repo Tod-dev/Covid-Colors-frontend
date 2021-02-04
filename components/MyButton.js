@@ -3,16 +3,11 @@ import { TouchableOpacity, View, Text, StyleSheet } from "react-native";
 
 import Colors from "../styles/Colors";
 
-const MyButton = ({ onPress, text1, text2, text3, text4 }) => {
+const MyButton = ({ onPress, text }) => {
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={style.view}>
-        <Text style={{ color: "white" }}>
-          <Text>{text1}</Text>
-          <Text style={style.important}>{text2}</Text>
-          <Text>{text3}</Text>
-          <Text style={style.important}>{text4}</Text> ➡
-        </Text>
+        <Text style={style.important}>{text}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -24,13 +19,16 @@ const style = StyleSheet.create({
   important: {
     fontWeight: "bold",
     fontSize: 18,
+    color: "white",
   },
   view: {
-    backgroundColor: Colors.special,
+    backgroundColor: Colors.primary,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 15,
     margin: 15,
     padding: 15,
+    borderColor: "black",
+    borderWidth: 10,
   },
 });

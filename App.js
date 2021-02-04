@@ -3,13 +3,13 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import { TouchableOpacity, Text } from "react-native";
+import { Image } from "react-native";
 
 import Home from "./pages/Home";
 import Details from "./pages/Details";
 
-import config from "./data/config";
 import Colors from "./styles/Colors";
+import myimage from "./assets/header.jpg";
 
 const Stack = createStackNavigator();
 
@@ -21,11 +21,18 @@ export default function App() {
           name="Home"
           component={Home}
           options={{
-            title: config.appName,
-            headerTintColor: Colors.special,
+            title: "",
+            headerTintColor: "black",
+            headerBackground: () => (
+              <Image
+                style={{ width: "100%", height: "100%" }}
+                source={myimage}
+              />
+            ),
             headerTitleStyle: {
+              fontSize: 25,
               fontWeight: "bold",
-              justifyContent: "center",
+              textAlign: "center",
             },
           }}
         />
@@ -33,9 +40,9 @@ export default function App() {
           name="Details"
           component={Details}
           options={({ route }) => ({
-            title: `${route.params.name}`,
+            title: route.params.reg.name,
             headerStyle: {
-              backgroundColor: "#f4511e",
+              backgroundColor: Colors.regioni[route.params.reg.color],
             },
             headerTintColor: "white",
           })}

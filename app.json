@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "covid-colors",
+    "name": "covid 19 Colors",
     "slug": "covid-colors",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -23,10 +23,11 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.todtotop.covidcolors"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.ico"
     }
   }
 }

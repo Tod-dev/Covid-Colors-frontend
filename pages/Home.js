@@ -1,15 +1,17 @@
-import React, { useState, useMemo, useEffect, useRef } from "react";
-import { SafeAreaView, Text, StyleSheet, View } from "react-native";
+import React, { useState, useMemo, useEffect } from "react";
+import { SafeAreaView, Text, StyleSheet, View, Image } from "react-native";
 
 //import regioni from "../data/regions.json";
 import { getRegions } from "../services/regions";
 import Region from "../components/Region";
 import Colors from "../styles/Colors";
-import DateTimePicker from "../components/DateTimePicker";
+//import DateTimePicker from "../components/DateTimePicker";
 import DataContext from "../components/DataContext";
 import MyButton from "../components/MyButton";
-
-import { convertDateToString } from "../utils";
+import Error from "../components/Error";
+import Loading from "../components/Loading";
+import config from "../data/config";
+//import { convertDateToString } from "../utils";
 
 const Home = ({ navigation }) => {
   const [regioni, setRegioni] = useState([]);
@@ -17,6 +19,7 @@ const Home = ({ navigation }) => {
   const [currentRegion, setCurrentRegion] = useState(undefined);
   const [currentDate, setCurrentDate] = useState(new Date());
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(true);
   const value = useMemo(
     () => ({ currentRegion, setCurrentRegion, currentDate, setCurrentDate }),
     [currentRegion, setCurrentRegion, currentDate, setCurrentDate]
@@ -38,6 +41,7 @@ const Home = ({ navigation }) => {
         });
         setStyledRegioni(styledReg);
       }
+      setLoading(false);
     };
     getData();
   }, []);
@@ -70,31 +74,26 @@ const Home = ({ navigation }) => {
     const regione = regioni.filter((r) => r._id === currentRegion);
     //console.log(regione[0]);
     navigation.navigate("Details", {
-      idReg: regione[0]._id,
-      name: regione[0].name,
+      reg: regione[0],
       //titleReg: currentRegion.name,
       //date: currentDate.getDate(),
       //stringDate: stringdate,
     }); // passa le props
   };
 
+  if (loading) {
+    return <Loading color={Colors.primary} />;
+  }
+
   if (error) {
-    return (
-      <DataContext.Provider value={value}>
-        <SafeAreaView style={style.containerError}>
-          <Text style={style.error}>
-            Impossibile contattare il server, prova a controllare la connessione
-            a internet! ⚠
-          </Text>
-        </SafeAreaView>
-      </DataContext.Provider>
-    );
+    return <Error />;
   }
 
   return (
     <DataContext.Provider value={value}>
       <SafeAreaView style={style.container}>
-        <Text style={style.intestazioni}>1 - Seleziona una Regione</Text>
+        <Text style={style.title}> {config.appName}</Text>
+        <Text style={style.intestazioni}>Seleziona una Regione</Text>
         {!currentRegion ? (
           <View style={style.mylist}>{styledRegioni}</View>
         ) : (
@@ -103,13 +102,7 @@ const Home = ({ navigation }) => {
           </View>
         )}
         {currentRegion && (
-          <MyButton
-            text1="SCOPRI LE LIMITAZIONI DI "
-            text2="OGGI"
-            text3=" NELLA REGIONE "
-            text4={currentRegion.name}
-            onPress={goToDetails}
-          />
+          <MyButton text="Vai alle informazioni" onPress={goToDetails} />
         )}
         {/*
         <>
@@ -135,7 +128,7 @@ const Home = ({ navigation }) => {
                 />
               )}
         </>
-            */}
+        */}
       </SafeAreaView>
     </DataContext.Provider>
   );
@@ -146,26 +139,23 @@ const style = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    marginHorizontal: 17,
   },
   intestazioni: {
     color: Colors.primary,
     fontSize: 20,
-    fontWeight: "bold",
-    marginVertical: 20,
+    marginVertical: 8,
   },
+
   mylist: {
     margin: 5,
     justifyContent: "center",
     flexDirection: "row",
     flexWrap: "wrap",
   },
-  containerError: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  error: {
-    color: "red",
+  title: {
+    fontWeight: "bold",
+    fontSize: 40,
+    color: Colors.special,
+    marginVertical: 10,
   },
 });
