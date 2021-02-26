@@ -22,12 +22,9 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "backgroundColor": "#4190de"
       },
       "package": "com.todtotop.covidcolors"
-    },
-    "web": {
-      "favicon": "./assets/favicon.ico"
     }
   }
 }
