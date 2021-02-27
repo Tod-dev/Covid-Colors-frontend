@@ -2,6 +2,10 @@ import React from "react";
 import { TouchableOpacity, View, Text, StyleSheet } from "react-native";
 
 import Colors from "../styles/Colors";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 const MyButton = ({ onPress, text }) => {
   return (
@@ -18,7 +22,7 @@ export default MyButton;
 const style = StyleSheet.create({
   important: {
     fontWeight: "bold",
-    fontSize: 18,
+    fontSize: hp("3%"),
     color: "white",
   },
   view: {
@@ -26,9 +30,9 @@ const style = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 15,
-    margin: 15,
-    padding: 15,
+    margin: hp("1%"),
+    padding: hp("1%"),
     borderColor: "black",
-    borderWidth: 10,
+    borderWidth: hp("0.8%"),
   },
 });

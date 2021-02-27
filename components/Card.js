@@ -1,30 +1,30 @@
 import React from "react";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
-
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 const Card = (props) => {
-  //console.log(props);
   const cardStyle = StyleSheet.create({
     card: {
-      padding: 17,
+      padding: hp("1%"),
       backgroundColor: props.color,
-      flex: 1,
+
       borderRadius: 10,
-      margin: 5,
-      justifyContent: "center",
-      alignItems: "center",
+      margin: hp("0.5%"),
     },
     text: {
       fontWeight: "bold",
-      fontSize: 15,
+      fontSize: hp("2%"),
+      color: "white",
+      textAlign: "center",
     },
   });
 
   return (
     <TouchableOpacity onPress={() => props.onClick(props.reg._id)}>
-      <View style={{ ...props.style.view, ...cardStyle.card }}>
-        <Text style={{ ...props.style.text, ...cardStyle.text }}>
-          {props.reg.name}
-        </Text>
+      <View style={cardStyle.card}>
+        <Text style={cardStyle.text}>{props.reg.name}</Text>
       </View>
     </TouchableOpacity>
   );

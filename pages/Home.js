@@ -1,5 +1,9 @@
 import React, { useState, useMemo, useEffect } from "react";
-import { SafeAreaView, Text, StyleSheet, View, Image } from "react-native";
+import { SafeAreaView, Text, StyleSheet, View, Alert } from "react-native";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 //import regioni from "../data/regions.json";
 import { getRegions } from "../services/regions";
@@ -44,6 +48,12 @@ const Home = ({ navigation }) => {
       setLoading(false);
     };
     getData();
+    Alert.alert(
+      "Attenzione !",
+      "Le seguenti informazioni sono aggiornate manualmente e periodicamente, tuttavia potrebbero non essere aggiornate in tempo reale, l'app Covid Colors e il suo team non si assumono alcuna responsabilità a riguardo",
+      [{ text: "OK", onPress: () => {} }],
+      { cancelable: false }
+    );
   }, []);
 
   useEffect(() => {
@@ -97,7 +107,7 @@ const Home = ({ navigation }) => {
         {!currentRegion ? (
           <View style={style.mylist}>{styledRegioni}</View>
         ) : (
-          <View style={{ ...style.mylist, marginBottom: 50 }}>
+          <View style={{ ...style.mylist, marginBottom: hp("1%") }}>
             {styledRegioni}
           </View>
         )}
@@ -139,23 +149,27 @@ const style = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    width: wp("100%"),
+    height: hp("100%"),
   },
   intestazioni: {
     color: Colors.primary,
-    fontSize: 20,
-    marginVertical: 8,
+    fontSize: hp("3%"),
+    marginVertical: hp("1%"),
   },
 
   mylist: {
-    margin: 5,
+    marginVertical: hp("2%"),
+    marginHorizontal: wp("8%"),
+    maxHeight: hp("60%"),
     justifyContent: "center",
     flexDirection: "row",
     flexWrap: "wrap",
   },
   title: {
     fontWeight: "bold",
-    fontSize: 40,
+    fontSize: hp("5%"),
     color: Colors.special,
-    marginVertical: 10,
+    marginVertical: hp("0.5%"),
   },
 });

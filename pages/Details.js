@@ -8,7 +8,7 @@ import Description from "../components/Description";
 import { getZoneByColor } from "../services/colors";
 import { ScrollView } from "react-native-gesture-handler";
 
-const Details = ({ route, navigation }) => {
+const Details = ({ route }) => {
   const [error, setError] = useState(false);
   const [description, setDescription] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -36,7 +36,7 @@ const Details = ({ route, navigation }) => {
   });
 
   const { reg } = route.params;
-  const { _id, name, rt, color } = reg;
+  const { color } = reg;
 
   useEffect(() => {
     const getData = async () => {
@@ -75,10 +75,11 @@ const Details = ({ route, navigation }) => {
   return (
     <View style={style.container}>
       <Text style={style.textZone}>Zona {color}</Text>
-      <Text>
+      {/*     <Text>
         <Text style={style.rtTitle}>RT = </Text>
         <Text style={style.rt}>{rt}</Text>
-      </Text>
+      </Text> 
+*/}
       <ScrollView>
         {description.map((obj, id) => (
           <Description data={obj} key={id} color={color} />

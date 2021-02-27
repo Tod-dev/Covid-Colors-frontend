@@ -13,22 +13,6 @@ const Region = (props) => {
     else setCurrentRegion(id);
   };
 
-  return (
-    <Card
-      reg={props.reg}
-      style={style}
-      onClick={onclickHandler}
-      color={props.color}
-    />
-  );
+  return <Card reg={props.reg} onClick={onclickHandler} color={props.color} />;
 };
 export default Region;
-
-const style = StyleSheet.create({
-  view: {
-    margin: 5,
-  },
-  text: {
-    color: "white",
-  },
-});
