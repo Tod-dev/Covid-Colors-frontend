@@ -4,7 +4,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
-
+import NetInfo from "@react-native-community/netinfo";
 //import regioni from "../data/regions.json";
 import { getRegions } from "../services/regions";
 import Region from "../components/Region";
@@ -15,6 +15,7 @@ import MyButton from "../components/MyButton";
 import Error from "../components/Error";
 import Loading from "../components/Loading";
 import config from "../data/config";
+//import ErrorMsg from "../components/ErrorMsg";
 //import { convertDateToString } from "../utils";
 
 const Home = ({ navigation }) => {
@@ -60,6 +61,11 @@ const Home = ({ navigation }) => {
     setCurrentRegion(undefined);
   }, [navigation]);
 
+  useEffect(() => {
+    NetInfo.fetch().then((state) => {
+      if (!state.isConnected) setError(true);
+    });
+  }, []);
   useEffect(() => {
     if (currentRegion) {
       //console.log(currentRegion);

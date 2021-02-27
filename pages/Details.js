@@ -7,6 +7,7 @@ import Loading from "../components/Loading";
 import Description from "../components/Description";
 import { getZoneByColor } from "../services/colors";
 import { ScrollView } from "react-native-gesture-handler";
+import NetInfo from "@react-native-community/netinfo";
 
 const Details = ({ route }) => {
   const [error, setError] = useState(false);
@@ -63,7 +64,11 @@ const Details = ({ route }) => {
     };
     getData();
   }, []);
-
+  useEffect(() => {
+    NetInfo.fetch().then((state) => {
+      if (!state.isConnected) setError(true);
+    });
+  }, []);
   if (isLoading) {
     return <Loading color={Colors.regioni[color]} />;
   }
