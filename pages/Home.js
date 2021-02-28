@@ -51,7 +51,9 @@ const Home = ({ navigation }) => {
     getData();
     Alert.alert(
       "Attenzione !",
-      "Le seguenti informazioni sono aggiornate manualmente e periodicamente, tuttavia potrebbero non essere aggiornate in tempo reale, l'app Covid Colors e il suo team non si assumono alcuna responsabilità a riguardo",
+      `Note legali. Il contenuto di questa APP è da intendersi esclusivamente come visualizzazione grafica non ufficiale. L'aggiornamento e' costante ma potrebbe non essere allineato con le ultime disposizioni. Si prega di far rifermento ai provvedimenti ufficiali emanati dal Governo su: ` +
+        `http://www.governo.it/it/coronavirus` +
+        `. Alcuni comuni, attività o scuole potrebbero essere soggette a limitazioni più restrittive in seguito ad ordinanze locali/regionali. Si invita, in tal caso,alla consultazione delle pagine dei rispettivi organi regionali. Covid Colors e il suo team non si assumono nessuna responsabiltà a riguardo.`,
       [{ text: "OK", onPress: () => {} }],
       { cancelable: false }
     );
