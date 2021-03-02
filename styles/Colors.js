@@ -7,6 +7,6 @@ export default {
     gialla: "#ebd534",
     arancione: "#f0611a",
     rossa: "#eb3434",
-    bianca: "#c9c9c9",
+    bianca: "#ababab",
   },
 };

@@ -8,11 +8,13 @@ import Description from "../components/Description";
 import { getZoneByColor } from "../services/colors";
 import { ScrollView } from "react-native-gesture-handler";
 import NetInfo from "@react-native-community/netinfo";
+import { convertDateToString } from "../utils";
 
 const Details = ({ route }) => {
   const [error, setError] = useState(false);
   const [description, setDescription] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [lastUpdate, setLastUpdate] = useState(undefined);
 
   const style = StyleSheet.create({
     container: {
@@ -34,6 +36,9 @@ const Details = ({ route }) => {
       fontWeight: "bold",
       fontSize: 25,
     },
+    data: {
+      fontWeight: "bold",
+    },
   });
 
   const { reg } = route.params;
@@ -48,17 +53,8 @@ const Details = ({ route }) => {
       } else {
         res = await res.json();
         //console.log(res.description);
-
-        const newArray = [];
-        for (let key in res.description) {
-          //console.log(key);
-          if (!res.description.hasOwnProperty(key)) continue;
-
-          let obj = { [key]: res.description[key] };
-          newArray.push(obj);
-        }
-        //console.log(newArray);
-        setDescription(newArray);
+        setDescription(res.description);
+        setLastUpdate(convertDateToString(new Date(res.lastUpdate)));
       }
       setIsLoading(false);
     };
@@ -80,11 +76,11 @@ const Details = ({ route }) => {
   return (
     <View style={style.container}>
       <Text style={style.textZone}>Zona {color}</Text>
-      {/*     <Text>
-        <Text style={style.rtTitle}>RT = </Text>
-        <Text style={style.rt}>{rt}</Text>
-      </Text> 
-*/}
+      {lastUpdate && (
+        <Text>
+          Ultimo aggiornamento: <Text style={style.data}>{lastUpdate} </Text>
+        </Text>
+      )}
       <ScrollView>
         {description.map((obj, id) => (
           <Description data={obj} key={id} color={color} />
