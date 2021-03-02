@@ -16,13 +16,14 @@ import Error from "../components/Error";
 import Loading from "../components/Loading";
 import config from "../data/config";
 //import ErrorMsg from "../components/ErrorMsg";
-//import { convertDateToString } from "../utils";
+import { convertDateToString } from "../utils";
 
 const Home = ({ navigation }) => {
   const [regioni, setRegioni] = useState([]);
   const [styledRegioni, setStyledRegioni] = useState(undefined);
   const [currentRegion, setCurrentRegion] = useState(undefined);
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [dateLastUpdate, setDateLastUpdate] = useState(undefined);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
   const value = useMemo(
@@ -45,6 +46,7 @@ const Home = ({ navigation }) => {
           return <Region reg={item} key={item._id} color={Colors.primary} />;
         });
         setStyledRegioni(styledReg);
+        setDateLastUpdate(convertDateToString(new Date(reg[0].lastUpdate)));
       }
       setLoading(false);
     };
@@ -111,6 +113,12 @@ const Home = ({ navigation }) => {
     <DataContext.Provider value={value}>
       <SafeAreaView style={style.container}>
         <Text style={style.title}> {config.appName}</Text>
+        {dateLastUpdate && (
+          <Text>
+            Ultimo aggiornamento:{" "}
+            <Text style={style.data}>{dateLastUpdate} </Text>
+          </Text>
+        )}
         <Text style={style.intestazioni}>Seleziona una Regione</Text>
         {!currentRegion ? (
           <View style={style.mylist}>{styledRegioni}</View>
@@ -179,5 +187,8 @@ const style = StyleSheet.create({
     fontSize: hp("5%"),
     color: Colors.special,
     marginVertical: hp("0.5%"),
+  },
+  data: {
+    fontWeight: "bold",
   },
 });
