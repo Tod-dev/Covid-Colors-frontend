@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "covid 19 Colors",
+    "name": "Covid Colors",
     "slug": "covid-colors",
     "version": "1.0.1",
     "orientation": "portrait",
@@ -24,7 +24,10 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#4190de"
       },
-      "package": "com.todtotop.covidcolors"
+      "config":{
+        "googleMobileAdsAppId": "ca-app-pub-5618837515872371~9220925842"
+      },
+      "package": "com.toddev.covidcolors"
     }
   }
 }
