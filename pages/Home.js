@@ -129,7 +129,9 @@ const Home = ({ navigation }) => {
             {styledRegioni}
           </View>
         )}
-        <MyAdBanner />
+        {
+          // <MyAdBanner />
+        }
         {currentRegion && (
           <MyButton text="Vai alle informazioni" onPress={goToDetails} />
         )}
