@@ -35,7 +35,6 @@ const Home = ({ navigation }) => {
     const getData = async () => {
       //console.log("sono dentro");
       let res = await getRegions();
-      res = await getRegions();
       //console.log("ok");
       if (!res.ok) {
         setError(true);
@@ -51,6 +50,7 @@ const Home = ({ navigation }) => {
       }
       setLoading(false);
     };
+    getData();
     getData();
     Alert.alert(
       "Attenzione !",
