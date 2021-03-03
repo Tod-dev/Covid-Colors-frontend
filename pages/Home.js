@@ -50,7 +50,7 @@ const Home = ({ navigation }) => {
       }
       setLoading(false);
     };
-    getData();
+    //getData();
     getData();
     Alert.alert(
       "Attenzione !",
@@ -114,12 +114,12 @@ const Home = ({ navigation }) => {
     <DataContext.Provider value={value}>
       <SafeAreaView style={style.container}>
         <Text style={style.title}> {config.appName}</Text>
-        {dateLastUpdate && (
+        {/*dateLastUpdate && (
           <Text>
             Ultimo aggiornamento:{" "}
             <Text style={style.data}>{dateLastUpdate} </Text>
           </Text>
-        )}
+        ) */}
         <Text style={style.intestazioni}>Seleziona una Regione</Text>
         {!currentRegion ? (
           <View style={style.mylist}>{styledRegioni}</View>
