@@ -25,7 +25,8 @@
         "googleMobileAdsAppId": "ca-app-pub-5618837515872371~9220925842"
       },
       "package": "com.toddev.covidcolors",
-      "permissions":[]
+      "permissions":[],
+      "versionCode":1
     }
   }
 }
