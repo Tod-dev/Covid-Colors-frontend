@@ -4,7 +4,8 @@ import { AdMobBanner, setTestDeviceIDAsync } from "expo-ads-admob";
 
 import Constants from "expo-constants";
 
-const AdBanner = () => {
+const AdBanner = (props) => {
+  const bannerSize = props.size;
   const testID = "ca-app-pub-3940256099942544/6300978111";
   const productionId = "ca-app-pub-5618837515872371/9432038202";
   // Is a real device and running in production.
@@ -22,7 +23,7 @@ const AdBanner = () => {
 
   return (
     <AdMobBanner
-      bannerSize="banner"
+      bannerSize={bannerSize}
       adUnitID={adUnitID}
       servePersonalizedAds={false}
       onDidFailToReceiveAdWithError={(e) => bannerError(e)}

@@ -9,6 +9,7 @@ import { getZoneByColor } from "../services/colors";
 import { ScrollView } from "react-native-gesture-handler";
 import NetInfo from "@react-native-community/netinfo";
 import { convertDateToString } from "../utils";
+import MyAdBanner from "../components/AdBanner";
 
 const Details = ({ route }) => {
   const [error, setError] = useState(false);
@@ -85,6 +86,7 @@ const Details = ({ route }) => {
         {description.map((obj, id) => (
           <Description data={obj} key={id} color={color} />
         ))}
+        <MyAdBanner size="fullBanner" />
       </ScrollView>
     </View>
   );
