@@ -82,11 +82,12 @@ const Details = ({ route }) => {
           Ultimo aggiornamento: <Text style={style.data}>{lastUpdate} </Text>
         </Text>
       )}
+      <MyAdBanner size="banner" />
+
       <ScrollView>
         {description.map((obj, id) => (
           <Description data={obj} key={id} color={color} />
         ))}
-        <MyAdBanner size="fullBanner" />
       </ScrollView>
     </View>
   );
