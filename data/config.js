@@ -1,4 +1,4 @@
 export default {
-  appName: "Covid Colors",
+  appName: "Colors Zone",
   baseApiUrl: "https://covid-colors.herokuapp.com",
 };
