@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "Covid Colors",
-    "slug": "covid-colors",
-    "version": "1.0.1",
+    "name": "Colors Zone",
+    "slug": "colors-zone",
+    "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -24,7 +24,7 @@
       "config":{
         "googleMobileAdsAppId": "ca-app-pub-5618837515872371~9220925842"
       },
-      "package": "com.toddev.covidcolors",
+      "package": "com.toddev.colorszone",
       "permissions":[],
       "versionCode":1
     }
