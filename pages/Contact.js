@@ -20,6 +20,7 @@ const style = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
+    margin: 20,
   },
   text: { textAlign: "center", marginVertical: 15 },
 });
