@@ -2,7 +2,7 @@
   "expo": {
     "name": "Colors Zone",
     "slug": "colors-zone",
-    "version": "2.0.0",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -26,7 +26,7 @@
       },
       "package": "com.toddev.colorszone",
       "permissions":[],
-      "versionCode":1
+      "versionCode":2
     }
   }
 }
