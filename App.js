@@ -7,6 +7,7 @@ import { Image } from "react-native";
 
 import Home from "./pages/Home";
 import Details from "./pages/Details";
+import Contact from "./pages/Contact";
 
 import Colors from "./styles/Colors";
 import myimage from "./assets/header.jpg";
@@ -46,6 +47,13 @@ export default function App() {
             },
             headerTintColor: "white",
           })}
+        />
+        <Stack.Screen
+          name="Contact"
+          component={Contact}
+          options={{
+            title: "Maggiori Informazioni",
+          }}
         />
       </Stack.Navigator>
       <StatusBar style="auto" />

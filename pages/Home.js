@@ -18,6 +18,7 @@ import config from "../data/config";
 //import ErrorMsg from "../components/ErrorMsg";
 import { convertDateToString } from "../utils";
 import MyAdBanner from "../components/AdBanner";
+import MyLink from "../components/MyLink";
 
 const Home = ({ navigation }) => {
   const [regioni, setRegioni] = useState([]);
@@ -121,6 +122,11 @@ const Home = ({ navigation }) => {
             <Text style={style.data}>{dateLastUpdate} </Text>
           </Text>
         ) */}
+        <MyLink
+          navigation={navigation}
+          linkName={config.ContactName}
+          inAppUrl={config.inAppContactPageName}
+        />
         <Text style={style.intestazioni}>Seleziona una Regione</Text>
         {!currentRegion ? (
           <View style={style.mylist}>{styledRegioni}</View>

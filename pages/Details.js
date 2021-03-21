@@ -10,8 +10,10 @@ import { ScrollView } from "react-native-gesture-handler";
 import NetInfo from "@react-native-community/netinfo";
 import { convertDateToString } from "../utils";
 import MyAdBanner from "../components/AdBanner";
+import MyLink from "../components/MyLink";
+import config from "../data/config";
 
-const Details = ({ route }) => {
+const Details = ({ route, navigation }) => {
   const [error, setError] = useState(false);
   const [description, setDescription] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -82,8 +84,12 @@ const Details = ({ route }) => {
           Ultimo aggiornamento: <Text style={style.data}>{lastUpdate} </Text>
         </Text>
       )}
+      <MyLink
+        navigation={navigation}
+        linkName={config.ContactName}
+        inAppUrl={config.inAppContactPageName}
+      />
       <MyAdBanner size="banner" />
-
       <ScrollView>
         {description.map((obj, id) => (
           <Description data={obj} key={id} color={color} />
