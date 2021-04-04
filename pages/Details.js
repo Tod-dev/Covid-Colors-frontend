@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useLayoutEffect } from "react";
 import { Text, View, StyleSheet } from "react-native";
 
 import Colors from "../styles/Colors";
@@ -12,6 +12,8 @@ import { convertDateToString } from "../utils";
 import MyAdBanner from "../components/AdBanner";
 import MyLink from "../components/MyLink";
 import config from "../data/config";
+import MyStar from "../components/MyStar";
+import { getPreferredRegion } from "../data/localStorage";
 
 const Details = ({ route, navigation }) => {
   const [error, setError] = useState(false);
@@ -46,6 +48,19 @@ const Details = ({ route, navigation }) => {
 
   const { reg } = route.params;
   const { color } = reg;
+
+  useLayoutEffect(() => {
+    const setStar = async () => {
+      const myReg = reg.name;
+      let starName = "staro";
+      const preferredRegion = await getPreferredRegion();
+      if (preferredRegion === myReg) starName = "star";
+      navigation.setOptions({
+        headerRight: () => <MyStar name={starName} color="white" reg={reg} />,
+      });
+    };
+    setStar();
+  }, [navigation]);
 
   useEffect(() => {
     const getData = async () => {

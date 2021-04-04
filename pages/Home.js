@@ -19,6 +19,11 @@ import config from "../data/config";
 import { convertDateToString } from "../utils";
 import MyAdBanner from "../components/AdBanner";
 import MyLink from "../components/MyLink";
+import {
+  storeData,
+  getDataBool,
+  getPreferredRegion,
+} from "../data/localStorage";
 
 const Home = ({ navigation }) => {
   const [regioni, setRegioni] = useState([]);
@@ -51,17 +56,31 @@ const Home = ({ navigation }) => {
         setDateLastUpdate(convertDateToString(new Date(reg[0].lastUpdate)));
       }
       setLoading(false);
+
+      const alert = await getDataBool(config.alertKey);
+      if (alert) {
+        Alert.alert(
+          "Attenzione !",
+          `Note legali. Il contenuto di questa APP è da intendersi esclusivamente come visualizzazione grafica non ufficiale. L'aggiornamento e' costante ma potrebbe non essere allineato con le ultime disposizioni. Si prega di far rifermento ai provvedimenti ufficiali emanati dal Governo su: ` +
+            `http://www.governo.it/it/coronavirus` +
+            `. Alcuni comuni, attività o scuole potrebbero essere soggette a limitazioni più restrittive in seguito ad ordinanze locali/regionali. Si invita, in tal caso,alla consultazione delle pagine dei rispettivi organi regionali. Covid Colors e il suo team non si assumono nessuna responsabiltà a riguardo.`,
+          [
+            { text: "OK", onPress: () => {} },
+            {},
+            {
+              text: "Non visualizzare più",
+              onPress: () => {
+                storeData(config.alertKey, "false");
+              },
+            },
+          ],
+          { cancelable: true }
+        );
+      }
     };
     //getData();
     getData();
-    Alert.alert(
-      "Attenzione !",
-      `Note legali. Il contenuto di questa APP è da intendersi esclusivamente come visualizzazione grafica non ufficiale. L'aggiornamento e' costante ma potrebbe non essere allineato con le ultime disposizioni. Si prega di far rifermento ai provvedimenti ufficiali emanati dal Governo su: ` +
-        `http://www.governo.it/it/coronavirus` +
-        `. Alcuni comuni, attività o scuole potrebbero essere soggette a limitazioni più restrittive in seguito ad ordinanze locali/regionali. Si invita, in tal caso,alla consultazione delle pagine dei rispettivi organi regionali. Covid Colors e il suo team non si assumono nessuna responsabiltà a riguardo.`,
-      [{ text: "OK", onPress: () => {} }],
-      { cancelable: false }
-    );
+    //console.log(getAllKeys());
   }, []);
 
   useEffect(() => {
@@ -96,6 +115,7 @@ const Home = ({ navigation }) => {
     //const stringdate = convertDateToString(currentDate);
     const regione = regioni.filter((r) => r._id === currentRegion);
     //console.log(regione[0]);
+    if (!regione[0]) return;
     navigation.navigate("Details", {
       reg: regione[0],
       //titleReg: currentRegion.name,
@@ -103,6 +123,34 @@ const Home = ({ navigation }) => {
       //stringDate: stringdate,
     }); // passa le props
   };
+
+  const goToSpecificRegion = (id) => {
+    const regione = regioni.filter((r) => r._id === id);
+    //console.log(regione[0]);
+    if (!regione[0]) return;
+    navigation.navigate("Details", {
+      reg: regione[0],
+    });
+  };
+
+  useEffect(() => {
+    if (loading) return;
+    const setReg = async () => {
+      //console.log("started async");
+      const preferredRegion = await getPreferredRegion();
+      //console.log("finito async");
+      for (let i = 0; i < regioni.length; i++) {
+        // console.log(regioni[i].name, preferredRegion);
+        if (regioni[i].name === preferredRegion) {
+          setCurrentRegion(regioni[i]._id);
+          //console.log(regioni[i]._id);
+          goToSpecificRegion(regioni[i]._id);
+        }
+      }
+      //console.log("finito for");
+    };
+    setReg();
+  }, [loading]);
 
   if (loading) {
     return <Loading color={Colors.primary} />;

@@ -6,4 +6,6 @@ export default {
   nomeSitoGov: "Sito Governo",
   ContactName: "Maggiori informazioni",
   inAppContactPageName: "Contact",
+  alertKey: "showDialog",
+  starredReg: "star",
 };
