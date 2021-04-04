@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View } from "react-native";
+import { View, Alert } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { storeData } from "../data/localStorage";
 import config from "../data/config";
@@ -16,11 +16,17 @@ const MyStar = ({ name, color, reg }) => {
         onPress={() => {
           if (myname === "staro") {
             //set region
-            alert(reg.name + " è la tua nuova regione preferita!");
+            Alert.alert(
+              "Modifica regione preferita",
+              reg.name + " è la tua nuova regione preferita!"
+            );
             setName("star");
             storeData(config.starredReg, reg.name);
           } else {
-            alert(reg.name + " non è più la tua regione preferita!");
+            Alert.alert(
+              "Modifica regione preferita",
+              reg.name + " non è più la tua regione preferita!"
+            );
             setName("staro");
             storeData(config.starredReg, "");
           }
